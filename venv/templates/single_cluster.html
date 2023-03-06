@@ -1,0 +1,31 @@
+{% extends "index.html" %}
+{% block title %}Index{% endblock %}
+{%block head%}
+{{ super() }}
+<a href="/" class="set-tag-view-all" id="home">Home</a>
+{%endblock%}
+{% block body %}
+<main id="articles-main">
+    <!--get top five variables and get their data into the variables-->
+    <section class="single-cluster-all">   
+        <div class="cluster-title"> 
+            <h3 class="set-tag"> All {{ cluster_size }} Products Of Cluster {{cluster_id}}<h3>
+                             
+        </div> 
+        {%for article in single_cluster%}   
+        {%for article_data in article%}   
+        <article class="single-cluster-article">
+            <section id="image">
+                <img alt="image" src="{{article_data[2]}}" width=200 height=150/>
+            </section>
+            <section id="content">
+                <p class="article-title">{{article_data[1]}}</p>
+                <!--<a class="readmore-btn" href="{{article_data[3]}}"><span>Know More</span></a> -->
+            </section>  
+        </article>        
+        {%endfor%}
+        {%endfor%} 
+</section>       
+                    
+</main>
+{% endblock %}

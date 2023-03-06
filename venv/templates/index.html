@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Index{% endblock %}
+{% block body %}
+<main>
+    {%for cluster_set in clusters%}
+    <!--get top five variables and get their data into the variables-->
+    <section class="cluster-top-5">
+        {%for cluster in cluster_set:%}
+        <div class="cluster-title"> 
+            <h3 class="set-tag">Cluster {{ cluster[0][3] }} Top Products<h3>
+            <a href="/single_cluster/{{ cluster[0][3] }}" class="set-tag-view-all">View all</a>  
+        </div>        
+        {%for article in cluster[0:5]:%}        
+        <article>
+            <img alt="image" src="{{article[2]}}" width=200 height=150/>
+            <!--<p class="article-title">{{article[1]}}</p>-->
+            <a class="readmore-btn" href="#"><span>{{article[1]}}</span></a>   
+        </article>
+        {%endfor%}
+        {%endfor%}                         
+    </section>
+    {%endfor%}  
+</main>
+{% endblock %}
