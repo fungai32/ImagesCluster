@@ -1,20 +1,38 @@
 {% extends "base.html" %}
-{% block title %}Index{% endblock %}
+{%block head%}
+{{ super() }}
+<!--<nav class="nav-bar">
+    <div>
+        <section >
+            <img id="logo"  alt="img" src="{{ url_for('static', filename='../static/img/Sevenza-Logo.png', _external=True) }}"  width=200 height=70/>
+        </section>
+        <ul class="nav-items">
+            {%for cluster_set in clusters%}
+            {%for cluster in cluster_set:%}
+            <li class="nav-item"><a href="/single_cluster/{{ cluster[0][-1]}}">Cluster {{ cluster[0][-1]}}</a></li>
+            {%endfor%}
+            {%endfor%}
+        </ul>
+    </div>
+</nav>-->
+{%endblock%}
 {% block body %}
 <main>
+    <section id="nav-bg-img"></section>
     {%for cluster_set in clusters%}
     <!--get top five variables and get their data into the variables-->
     <section class="cluster-top-5">
         {%for cluster in cluster_set:%}
         <div class="cluster-title"> 
-            <h3 class="set-tag">Cluster {{ cluster[0][3] }} Top Products<h3>
-            <a href="/single_cluster/{{ cluster[0][3] }}" class="set-tag-view-all">View all</a>  
+            <h3 class="set-tag">Cluster {{ cluster[0][-1]}} Trending Articles<h3>
+            <a href="/single_cluster/{{ cluster_set[0][1][-1]}}" class="set-tag-view-all">View all</a>    
         </div>        
-        {%for article in cluster[0:5]:%}        
+        {%for article in cluster[0:5]%}    
         <article>
-            <img alt="image" src="{{article[2]}}" width=200 height=150/>
-            <!--<p class="article-title">{{article[1]}}</p>-->
-            <a class="readmore-btn" href="#"><span>{{article[1]}}</span></a>   
+            <img alt="image" src="{{article.image_link}}" width=200 height=150/>
+            <p class="article-title">{{article.title}}</p>
+            <p class="article-description">{{article.description}}</p>
+            <a class="readmore-btn" href="{{article.read_link}}">Know More</a>   
         </article>
         {%endfor%}
         {%endfor%}                         

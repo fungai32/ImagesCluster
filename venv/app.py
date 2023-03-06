@@ -5,44 +5,42 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    all_clusters=pd.read_csv('./static/datasets/cluster_images.csv')
-    all_clusters.drop(columns='product_category',inplace=True)
-    filtering_array=all_clusters.Images_Cluster.unique()
-    all_cluster_images_lists=[]#list of list#list of list
+    all_clusters=pd.read_csv('./static/datasets/news_articles_clustered_data.csv')
+    filtering_array=all_clusters.clustered_descriptions.unique()
+    all_cluster_articles_lists=[]#list of list
     for cluster_id in filtering_array:
         cluster_data=[]
-        cluster=all_clusters[all_clusters.Images_Cluster==cluster_id]
-        image_data=[]
+        cluster=all_clusters[all_clusters.clustered_descriptions==cluster_id]
+        article_data=[]
         for article_id in range(len(cluster)):
-            image_data.append(cluster.iloc[article_id])
-        cluster_data.append(image_data)  
-        all_cluster_images_lists.append(cluster_data)    
-   
-    return render_template('index.html',clusters=all_cluster_images_lists)
+            article_data.append(cluster.iloc[article_id])
+        cluster_data.append(article_data)  
+        all_cluster_articles_lists.append(cluster_data)
+        
+    return render_template('index.html',clusters=all_cluster_articles_lists)
 
 def return_all_clusters():
-    all_clusters=pd.read_csv('./static/datasets/cluster_images.csv')
-    all_clusters.drop(columns='product_category',inplace=True)
-    filtering_array=all_clusters.Images_Cluster.unique()
-    all_cluster_images_lists=[]#list of list#list of list
+    all_clusters=pd.read_csv('./static/datasets/news_articles_clustered_data.csv')
+    filtering_array=all_clusters.clustered_descriptions.unique()
+    all_cluster_articles_lists=[]#list of list
     for cluster_id in filtering_array:
         cluster_data=[]
-        cluster=all_clusters[all_clusters.Images_Cluster==cluster_id]
-        image_data=[]
+        cluster=all_clusters[all_clusters.clustered_descriptions==cluster_id]
+        article_data=[]
         for article_id in range(len(cluster)):
-            image_data.append(cluster.iloc[article_id])
-        cluster_data.append(image_data)  
-        all_cluster_images_lists.append(cluster_data)  
-    return all_cluster_images_lists
-
+            article_data.append(cluster.iloc[article_id])
+        cluster_data.append(article_data)  
+        all_cluster_articles_lists.append(cluster_data)
+    return all_cluster_articles_lists
+    
 @app.route('/single_cluster/<id>')
 def single_cluster(id):
-    all_clusters=pd.read_csv('./static/datasets/cluster_images.csv')
+    all_clusters=pd.read_csv('./static/datasets/news_articles_clustered_data.csv')
     cluster_id=int(id)#star variable
     cluster_data=[]
-    cluster=all_clusters[all_clusters.Images_Cluster==cluster_id]
+    cluster=all_clusters[all_clusters.clustered_descriptions==cluster_id]
     article_data=[]
-    for article_id in range(0,len(cluster)):
+    for article_id in range(len(cluster)):
         article_data.append(cluster.iloc[article_id].tolist())
     cluster_data.append(article_data)  
     list(cluster_data)
@@ -56,6 +54,5 @@ def single_cluster(id):
 app.add_url_rule('/', 'index', index)
 app.add_url_rule('/single_cluster', 'single_cluster', single_cluster)
 
-
-#if __name__ == '__main__':
-#    app.run()
+if __name__ == '__main__':
+    app.run()

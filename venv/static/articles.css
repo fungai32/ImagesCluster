@@ -19,6 +19,7 @@ a{
 }
 .nav-items{
     padding-top: 55px;
+    margin-left: 140px;
 }
 .nav-item>a{
     color:white
@@ -101,7 +102,6 @@ a{
     font-weight: bolder;
     color:#011d32;
 }
-
 .set-tag-view-all{
     position: absolute;
     right: 20px;
